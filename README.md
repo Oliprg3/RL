@@ -20,3 +20,9 @@ Features
 - **Fast training** –-- completes in 2‑3 minutes on a CPU
 - **Headless mode** –-- train without GUI for speed
 - **Manual control** –-- drive the car yourself with arrow keys
+
+  Quick Start
+
+### 1, Install dependencies
+```bash
+pip install -r requirements.txt
