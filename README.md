@@ -21,8 +21,55 @@ Features
 - **Headless mode** –-- train without GUI for speed
 - **Manual control** –-- drive the car yourself with arrow keys
 
+How It Works
+The Environment
+Track: White road on a black background (circular, oval, or figure‑8).
+
+Car: Bicycle model with speed, acceleration, drag, and steering.
+
+Sensors: 15 rays shooting from -80° to +80° – return distances to track edges.
+
+Actions: Continuous throttle [-1,1] and steering [-1,1].
+
+The Algorithm (SAC)
+Off‑policy – learns from a replay buffer (sample‑efficient).
+
+Continuous actions – perfect for driving.
+
+Entropy regularisation – balances exploration vs exploitation automatically.
+
+Two critics – reduces overestimation (Clipped Double‑Q).
+
+Reward Function
+Signal	Value
+Staying on track	+10 per step
+Leaving track	–200 per step
+Forward progress	+0.5 per unit
+Speed	+0.1 per unit
+Centre distance	–0.02 per unit
+Heading alignment	–0.02 per degree error
+Lap completion	+400
+
+After 50,000 training steps (~2‑3 minutes):
+
+Success rate: >90% lap completion
+
+Average speed: 20–25 units
+
+Lap time: ~200 steps
+
+Zero off‑track incidents (consistent)
   Quick Start
 
 ### 1, Install dependencies
 ```bash
 pip install -r requirements.txt
+Train with GUI:
+    python src/train.py --mode train --steps 50000
+Run the trained agent:
+    python src/demo.py
+Drive manually:
+    python src/train.py --mode manual
+
+
+
